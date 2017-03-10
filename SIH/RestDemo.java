@@ -39,10 +39,33 @@ public class RestDemo extends HttpServlet {
     private JSONParser parser = new JSONParser();
     private JSONObject joUser = null;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	
+		StringBuilder sb = new StringBuilder();
+	    try 
+	    {
+	      BufferedReader reader = request.getReader();
+	      String line = null;
+	      while ((line = reader.readLine()) != null)
+	      { sb.append(line);
+	      }
+	    } catch (Exception e) { e.printStackTrace(); }
+	
+	    JSONParser parser = new JSONParser();
+	    JSONObject joUser = null;
+        String username="";
+        try
+	    {
+	    	//creating JSONObject out of JSON formatted String
+	      joUser = (JSONObject) parser.parse(sb.toString());
+	      username= joUser.get("username").toString();
+
+	    } catch (Exception e) { e.printStackTrace(); }
+
+		
 	RestDemoBean rdb = new RestDemoBean();
-	rdb.getDocument("sjsidjain");
+	rdb.getDocument(username);
 	PrintWriter out = response.getWriter();
-  out.println(rdb.getContactInformation());
+    out.println(rdb.getContactInformation());
 	}
 
 }
