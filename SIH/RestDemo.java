@@ -3,6 +3,7 @@ package SIH;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.bson.Document;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -36,8 +38,8 @@ public class RestDemo extends HttpServlet {
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-    private JSONParser parser = new JSONParser();
-    private JSONObject joUser = null;
+  //  private JSONParser parser = new JSONParser();
+    protected JSONObject obj = new JSONObject();
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
 		StringBuilder sb = new StringBuilder();
@@ -51,7 +53,7 @@ public class RestDemo extends HttpServlet {
 	    } catch (Exception e) { e.printStackTrace(); }
 	
 	    JSONParser parser = new JSONParser();
-	    JSONObject joUser = null;
+	    JSONObject joUser = new JSONObject();
         String username="";
         try
 	    {
@@ -61,11 +63,29 @@ public class RestDemo extends HttpServlet {
 
 	    } catch (Exception e) { e.printStackTrace(); }
 
-		
-	RestDemoBean rdb = new RestDemoBean();
-	rdb.getDocument(username);
-	PrintWriter out = response.getWriter();
-    out.println(rdb.getContactInformation());
+    //RestDemoBean rdb = new RestDemoBean();
+    //Add Data In Database    
+	//rdb.upsertUsername(username);
+    //rdb.upsertContactInformation("97997","sjsid","","","",""); 
+    //ArrayList<String> tags = new ArrayList<String>();
+    //tags.add("aa");tags.add("bb");
+    //rdb.upsertSurfingHistory(tags);
+    //rdb.upsertFavouriteTag(tags);
+    //rdb.upsertFollower(tags);
+    //rdb.upsertFollowing(tags);
+    //rdb.upsertContributing(tags);
+    
+    //Get Data From DataBase    
+    //Document doc = rdb.getDocument(username);
+	//rdb.getContactInformation(doc, obj);
+	//rdb.getFavouriteTag(doc, obj);
+	//rdb.getFollower(doc,obj);
+	//rdb.getFollowing(doc, obj);
+	//rdb.getContributing(doc,obj);
+	//rdb.getSurfingHistory(doc,obj);
+      //rdb.insertProjects();
+    //PrintWriter out = response.getWriter();
+	//out.println(obj.toJSONString());
 	}
 
 }
