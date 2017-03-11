@@ -2,8 +2,8 @@
 For SIH Demo Programs and Concepts
 
 prerequisite:
-Eclipse Mars (preferred) or any other version of Eclipse
-Java 1.8 (Preferred) or 1.7 
+Eclipse Mars (preferred) or any other version of Eclipse,
+Java 1.8 (Preferred) or 1.7 ,
 Apache Tomat 8.x (preferred) or 7.x
 
 open eclipse
@@ -20,6 +20,22 @@ Select Post
 In RAW Payload enter:  {"username":"sjsidjain"}
 Then click Send
 Expected output:  {"State":"Rajasthan","Email id":"sjsidjain213@gmail.com","Zipcode":302017.0,"Country":"India","City":"Jaipur","Phone no":9.799784767E9}
+
+Required External Jar Files
+
+ 1.java-json.jar (http://www.java2s.com/Code/JarDownload/java-json/java-json.jar.zip)
+
+2.jersey-bundle-1.8.jar (http://www.java2s.com/Code/JarDownload/jersey-bundle/jersey-bundle-1.8.jar.zip)
+
+3.jsr311-api-1.1.1.jar (http://www.java2s.com/Code/JarDownload/jsr311/jsr311-api-1.1.1.jar.zip)
+
+4.json-simple-1.1.1.jar (http://www.java2s.com/Code/JarDownload/json-simple/json-simple-1.1.1.jar.zip )
+
+5.Download this jar from maven with following ID's
+
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver</artifactId>
+            <version>3.2.2</version>
 
 
 Structure of Project
