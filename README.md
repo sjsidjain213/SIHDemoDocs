@@ -49,6 +49,7 @@ Everyone should Add atleast one of this method by End of 12-03-2017. Select any 
     2.getSingleProject -> retrive any particular project from database on the basis of name.
     3.getAllProject -> retrive all project. 
     4. upsertEncyptPassword -> update or insert **encrypted** password
-    4. Improve any exsisting method
+    5. extractZipFile -> for Extracting data out of zipfile uploaded by user
+    6. Improve any exsisting method
     
     you can all also add any other method if you think it will be required
