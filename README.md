@@ -48,5 +48,7 @@ Everyone should Add atleast one of this method by End of 12-03-2017. Select any 
     1.updateSingleProject -> if we want to update any particular project in any document like If I want to update an exsisting project                                of username sjsidjain. 
     2.getSingleProject -> retrive any particular project from database on the basis of name.
     3.getAllProject -> retrive all project. 
+    4. upsertEncyptPassword -> update or insert **encrypted** password
     4. Improve any exsisting method
+    
     you can all also add any other method if you think it will be required
