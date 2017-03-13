@@ -1,4 +1,4 @@
-package mySIH;
+package SIH;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -61,7 +61,7 @@ public class RestDemo extends HttpServlet {
 	    	//creating JSONObject out of JSON formatted String
 	      joUser = (JSONObject) parser.parse(sb.toString());
 	      username= joUser.get("username").toString();
-	      requiredProject = joUser.get("myProject").toString();
+	      //requiredProject = joUser.get("myProject").toString();
 
 	    } catch (Exception e) { e.printStackTrace(); }
 
