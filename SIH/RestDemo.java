@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.bson.Document;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.bson.Document;
 
 @WebServlet("/RestDemo")
 public class RestDemo extends HttpServlet {
@@ -55,11 +55,13 @@ public class RestDemo extends HttpServlet {
 	    JSONParser parser = new JSONParser();
 	    JSONObject joUser = new JSONObject();
         String username="";
+        String requiredProject = "";
         try
 	    {
 	    	//creating JSONObject out of JSON formatted String
 	      joUser = (JSONObject) parser.parse(sb.toString());
 	      username= joUser.get("username").toString();
+	      //requiredProject = joUser.get("myProject").toString();
 
 	    } catch (Exception e) { e.printStackTrace(); }
 
@@ -74,11 +76,13 @@ public class RestDemo extends HttpServlet {
     //rdb.upsertFollower(tags);
     //rdb.upsertFollowing(tags);
     //rdb.upsertContributing(tags);
-    
+      
     //Get Data From DataBase    
     //Document doc = rdb.getDocument(username);
 	//rdb.getContactInformation(doc, obj);
-	//rdb.getFavouriteTag(doc, obj);
+    //rdb.getAllProjects(doc, obj);
+    //rdb.getSingleProject(doc, obj, requiredProject);
+    //rdb.getFavouriteTag(doc, obj);
 	//rdb.getFollower(doc,obj);
 	//rdb.getFollowing(doc, obj);
 	//rdb.getContributing(doc,obj);
