@@ -1,0 +1,94 @@
+import static com.mongodb.client.model.Filters.eq;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import org.bson.Document;
+
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.FindIterable;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+
+public class ProjectInsertBean {
+	  
+	   // connections
+	  MongoClientURI uri  = new MongoClientURI("mongodb://sjsidjain:sjsidjain@ds145359.mlab.com:45359/testhack"); 
+      MongoClient client = new MongoClient(uri);
+      MongoDatabase db = client.getDatabase(uri.getDatabase());
+      MongoCollection <Document> tc = db.getCollection("UserProjectDetails");
+      FindIterable <Document> docParser = tc.find();
+     
+      // Instance Variables
+      Document doc = new Document();
+      Date now = new Date();
+     private String title,description,URL,likes,commentusername;
+     private boolean privaterepository; 
+     private ArrayList<String> tags = new ArrayList<String>();
+     private ArrayList<String> contributors = new ArrayList<String>();
+     private ArrayList<String> images = new ArrayList<String>();
+     private ArrayList<Document> comment = new ArrayList<Document>();
+      
+      public Document getDocument(String id)
+      {FindIterable<Document> doc = tc.find(eq("username",id));
+          for(Document d : doc)
+  	        this.doc=d;
+      	return this.doc;
+      }
+      public void setCommentUsername(String commentusername)
+      {
+    	  this.commentusername=commentusername;
+      }
+      
+      public void setTitle(String title)
+      {
+    	  this.title=title;
+      }
+      
+      public void setDescription(String description)
+      {
+    	  this.description=description;
+      }
+      
+      public void setProjectURL(String URL)
+      {
+    	  this.URL=URL;
+      }
+      
+      public void setLikes(String likes)
+      {
+    	  this.likes=likes;
+      }
+      public void setTags(ArrayList<String> tags)
+      {
+    	  this.tags=tags;
+      }
+      public void setComment(ArrayList <Document> comments)
+      {
+    	this.comment=comments;  
+      }
+      public void setPrivateRepository(boolean privaterepository)
+      {
+    	  this.privaterepository=privaterepository;
+      }
+      
+      public boolean insertProjects()
+      {   
+         Document doc = new Document()
+    	  .append("title",title)		  
+    	  .append("description",description)
+    	  .append("project_url",URL)
+    	  .append("tags",tags)
+    	  .append("likes",likes)
+    	  .append("Comments",comment)
+    	  .append("Contributors",contributors)
+    	  .append("README", "rm")
+    	  .append("private", privaterepository)
+    	  .append("zip_file","")
+    	  .append("images","");
+    	  tc.updateOne(eq("username","sjsidjain"),new Document("$addToSet",new Document("Projects",doc)));	
+    	  return true;
+      }
+
+}
