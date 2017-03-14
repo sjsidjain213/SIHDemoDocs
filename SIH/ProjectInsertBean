@@ -1,9 +1,12 @@
+
 import static com.mongodb.client.model.Filters.eq;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import org.bson.Document;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -13,8 +16,8 @@ import com.mongodb.client.MongoDatabase;
 
 public class ProjectInsertBean {
 	  
-	   // connections
-	  MongoClientURI uri  = new MongoClientURI("mongodb://sjsidjain:sjsidjain@ds145359.mlab.com:45359/testhack"); 
+	// connections
+      MongoClientURI uri  = new MongoClientURI("mongodb://sjsidjain:sjsidjain@ds145359.mlab.com:45359/testhack"); 
       MongoClient client = new MongoClient(uri);
       MongoDatabase db = client.getDatabase(uri.getDatabase());
       MongoCollection <Document> tc = db.getCollection("UserProjectDetails");
@@ -23,13 +26,13 @@ public class ProjectInsertBean {
       // Instance Variables
       Document doc = new Document();
       Date now = new Date();
-     private String title,description,URL,likes,commentusername;
+     private String title,description,URL,likes,commentusername,comment;
      private boolean privaterepository; 
      private ArrayList<String> tags = new ArrayList<String>();
      private ArrayList<String> contributors = new ArrayList<String>();
      private ArrayList<String> images = new ArrayList<String>();
-     private ArrayList<Document> comment = new ArrayList<Document>();
-      
+     private ArrayList<Document> commentarray = new ArrayList<Document>();
+     
       public Document getDocument(String id)
       {FindIterable<Document> doc = tc.find(eq("username",id));
           for(Document d : doc)
@@ -66,13 +69,14 @@ public class ProjectInsertBean {
       }
       public void setComment(ArrayList <Document> comments)
       {
-    	this.comment=comments;  
+    ///	this.comment=comments;  
       }
       public void setPrivateRepository(boolean privaterepository)
       {
     	  this.privaterepository=privaterepository;
       }
       
+      // for inserting new projects inside database
       public boolean insertProjects()
       {   
          Document doc = new Document()
@@ -90,5 +94,53 @@ public class ProjectInsertBean {
     	  tc.updateOne(eq("username","sjsidjain"),new Document("$addToSet",new Document("Projects",doc)));	
     	  return true;
       }
-
+      
+      // retrieving all the comment associated with any project
+      public ArrayList <Document> getComments(String title)
+      { 
+    	return commentarray;
+      }
+      
+      // for appending new comment in list of exsisting comments for any project
+      @SuppressWarnings("unchecked")
+	  public void addComment(String commentusername,String comment)
+      {
+    	    Document doc = new Document();
+        	FindIterable <Document>project = (FindIterable<Document>) doc.get("project");  
+         outer: for(Document d: project)
+          	if(d.getString("title").equals(title))
+          	{ doc =d;
+          		break outer;
+          	}
+      	
+           ArrayList <Document> commentarray = (ArrayList<Document>) doc.get("Comments");
+    	   Document commentdoc = new Document();
+    	   commentdoc.append("username",commentusername)
+    	   .append("comment",this.comment)
+    	   .append("Date", now);
+           this.commentarray.add(commentdoc);
+       }
+      
+      // for getting details of all the project
+      @SuppressWarnings("unchecked")
+	public JSONObject getAllProjects(Document doc,JSONObject obj)
+      {
+    	  JSONArray list = new JSONArray();
+		ArrayList<Document> project = (ArrayList<Document>)doc.get("Projects");
+          for(Document d: project){
+        	  list.add(d);
+          }
+          obj.put("Projects",list);
+          return obj;
+      } 
+       // for getting details of single project
+      @SuppressWarnings("unchecked")
+	public JSONObject getSingleProject(Document doc, JSONObject obj, String title)
+      {
+    	  ArrayList<Document> required = (ArrayList<Document>)doc.get("Projects");
+    	  for(Document d : required)
+    		  if(d.getString("title").equals(title))
+    			  obj.put("Project", d);
+    	  return obj;
+      }
 }
