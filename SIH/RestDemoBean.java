@@ -13,6 +13,8 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 
+import org.jasypt.util.text.StrongTextEncryptor;
+
 import static com.mongodb.client.model.Filters.*; // weired 
 //import static com.mongodb.client.model.Sorts.*;
 
@@ -27,6 +29,11 @@ public class RestDemoBean {
       String ID;
       Document doc;
     String bio;
+	StrongTextEncryptor textEncryptor = new StrongTextEncryptor();
+	
+	RestDemoBean(){
+	textEncryptor.setPassword("mycode");
+	}
     @SuppressWarnings({ "rawtypes", "unchecked" })
 	public ArrayList connection()
 	{
@@ -286,4 +293,21 @@ public class RestDemoBean {
     			  obj.put("Project", d);
     	  return obj;
       }
+	  //funtion for updating/insert password
+	   public boolean updatePass(String user,String pass)
+  	{
+	  String encryptedPassword = textEncryptor.encrypt(pass);
+  	  tc.updateOne(eq("username",user),new Document("$set", new Document("password",encryptedPassword)));
+    	  return true; 
+  	}
+ 		//function for checking password 
+  		public boolean checkPass(String pass){
+	  		String spass = textEncryptor.decrypt(doc.getString("password"));
+	  		if(pass.equals(spass)){
+		  	return true;
+	  		}
+	  		else
+		  		return false;
+  		}
+  
  }
