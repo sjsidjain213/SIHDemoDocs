@@ -143,7 +143,8 @@ public class ProjectInsertBean {
     			  obj.put("Project", d);
     	  return obj;
       }
-            public boolean saveZipFile(String zipFilePath) throws IOException
+      // this method will unzip any zip file and will also upload that unzipped file in database 
+       public boolean saveZipFile(String zipFilePath) throws IOException
       {
     	    ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipFilePath));
    		    ZipEntry entry = zipIn.getNextEntry();
@@ -159,4 +160,13 @@ public class ProjectInsertBean {
    		    zipIn.close();
             return true;    	  
       }
+      // can delete any zip file
+      public void deleteZipFile(ObjectId objectid) {
+    	  try {
+    	   GridFSBucket gridBucket = GridFSBuckets.create(db,"photo");
+    	   gridBucket.delete(objectid);
+    	  } catch (Exception e) {
+    	   e.printStackTrace();
+    	  }
+    	}
 }
