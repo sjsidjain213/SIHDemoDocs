@@ -143,4 +143,20 @@ public class ProjectInsertBean {
     			  obj.put("Project", d);
     	  return obj;
       }
+            public boolean saveZipFile(String zipFilePath) throws IOException
+      {
+    	    ZipInputStream zipIn = new ZipInputStream(new FileInputStream(zipFilePath));
+   		    ZipEntry entry = zipIn.getNextEntry();
+   		    outer: while (entry != null) {
+   		          if (!entry.isDirectory()) {
+   		          GridFSBucket gridBucket = GridFSBuckets.create(this.db,"photo");
+   		          GridFSUploadOptions uploadOptions = new GridFSUploadOptions().chunkSizeBytes(1024).metadata(new Document("type", "image").append("upload_date","").append("content_type", "image/jpg"));
+   		          ObjectId fileId = gridBucket.uploadFromStream(entry.getName(),zipIn, uploadOptions);
+   		       	   		        }
+   		        zipIn.closeEntry();
+   		        entry = zipIn.getNextEntry();
+   		    }
+   		    zipIn.close();
+            return true;    	  
+      }
 }
