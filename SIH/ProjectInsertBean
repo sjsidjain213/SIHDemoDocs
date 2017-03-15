@@ -149,7 +149,7 @@ public class ProjectInsertBean {
    		    ZipEntry entry = zipIn.getNextEntry();
    		    outer: while (entry != null) {
    		          if (!entry.isDirectory()) {
-   		          GridFSBucket gridBucket = GridFSBuckets.create(this.db,"photo");
+   		          GridFSBucket gridBucket = GridFSBuckets.create(this.db,"zipfile");
    		          GridFSUploadOptions uploadOptions = new GridFSUploadOptions().chunkSizeBytes(1024).metadata(new Document("type", "image").append("upload_date","").append("content_type", "image/jpg"));
    		          ObjectId fileId = gridBucket.uploadFromStream(entry.getName(),zipIn, uploadOptions);
    		       	   		        }
